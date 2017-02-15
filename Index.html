@@ -1,0 +1,97 @@
+<!DOCTYPE html>+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="CoffeeCup HTML Editor (www.coffeecup.com)">
+    <meta name="dcterms.created" content="mi., 15 feb. 2017 03:10:14 GMT">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pico & Placa</title>
+	<script src="ControlPicoPlaca.js"></script>
+    <script src="CrearTablaHTML.js"></script>
+    <!--[if IE]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	  <script>
+	  	 var miObjeto = {"PicoPlaca":[
+		 	 		  {"dia":1,"placa":[0,1]},
+					  {"dia":2,"placa":[2,3]},
+					  {"dia":3,"placa":[4,5]},
+					  {"dia":4,"placa":[6,7]},
+					  {"dia":5,"placa":[8,9]},
+		 ],"Horario":["07:00-09:00","16:00-19:00"]}
+	
+ 
+		 function procesar(){
+		    var placa = document.getElementById("Placa").value;
+			var fecha = document.getElementById("Fecha").value;
+			var hora  = document.getElementById("Hora").value;
+			var estaOK = false;
+			
+			var PP = new miPlaca(placa,fecha,hora,miObjeto);
+			if(placa!=""){
+				if(!PP.valPlaca()){
+					document.getElementById("msg1").innerHTML="Placa no es correcta"
+					estaOK = false;
+				}else{
+					document.getElementById("msg1").innerHTML=PP.ultimoNumPlaca();
+					estaOK = true;
+				}	
+			}else{
+				  estaOK = false
+			}
+			
+			if(fecha!=""){
+				if(!PP.valFecha()){
+					document.getElementById("msg2").innerHTML="Fecha no es correcta"
+					estaOK = false;
+				}else{
+				  document.getElementById("msg2").innerHTML=""
+				  estaOK = true;
+				}  	
+			}else{
+				  estaOK = false
+			}
+			if(hora!=""){
+				if(!PP.valHora()){
+					document.getElementById("msg2").innerHTML="Hora no es correcta"
+					estaOK = false;
+				}else{
+				  document.getElementById("msg3").innerHTML="";
+				  estaOK = true;
+				}  	
+			}else{
+				  estaOK = false
+			}
+			
+			if(estaOK){
+				 document.getElementById("msg4").innerHTML= PP.controlPlaca();	   
+			}							
+		 } 
+		 
+		 function creaTabla(){
+		 	var Tabla = new miTabla(miObjeto)
+			document.getElementById("miTabla").innerHTML = Tabla.construyeTabla();	  
+		 }
+		 
+  </script>
+  </head>
+
+  <body onload=creaTabla()>
+    	<p id="miTabla"></p>
+		<BR><BR>
+		<p>Ingrese placa del auto <input type="txt" name="Placa" id="Placa" size=7 maxlength="7" onchange="procesar()" /></p>
+		<p id="msg1"></p>
+		<p>Fecha actual:	<input type=txt name="Fecha" id="Fecha" placeholder="dd/mm/yyyy" onchange="procesar()" /></p>
+		<p id="msg2"></p>
+		<p>Hora actual :    <input type=txt name="Hora"  id="Hora" placeholder="hh:mm" onchange="procesar()" /></p>
+		<p id="msg3"></p>
+		<br>
+		<br>
+		<br>
+		<p id="msg4"></p>
+		
+		
+  </body>
+</html>
